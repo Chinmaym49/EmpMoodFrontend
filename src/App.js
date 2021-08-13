@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 
@@ -13,6 +14,7 @@ const App=()=> {
 			</div>
 		</BrowserRouter>
 	);
+
 }
 
 export default App;
