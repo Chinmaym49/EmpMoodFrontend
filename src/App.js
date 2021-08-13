@@ -1,25 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import Dashboard from "./components/Dashboard";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App=()=> {
+	return(
+		<BrowserRouter>
+			<div className="App">
+				<Switch>
+					<Route exact path="/" render={()=>(<Dashboard/>)}></Route> {/* TODO: Change Dashboard to MoodForm */}
+					<Route path="/dashboard" render={()=>(<Dashboard/>)}></Route>
+					<Redirect to="/"></Redirect>
+				</Switch>
+			</div>
+		</BrowserRouter>
+	);
 }
 
 export default App;
