@@ -1,6 +1,6 @@
 import React from 'react';
 import {HorizontalBar} from 'react-chartjs-2';
-import styles from './MoodGraph.module.css';
+import styles from '../styles/MoodGraph.module.css';
 
 const MoodGraph = (data) => {
     const barChart = (

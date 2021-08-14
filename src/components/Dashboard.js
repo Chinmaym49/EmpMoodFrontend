@@ -2,6 +2,8 @@ import { Fragment, useEffect, useState } from "react";
 import EmpList from "./EmpList";
 import NavBar from "./NavBar";
 import axios from "axios";
+import AvgMood from "./AvgMood";
+import MoodGraph from "./MoodGraph";
 
 const Dashboard=()=> {
 
@@ -37,6 +39,8 @@ const Dashboard=()=> {
             {
                 !load && !err &&
                 <Fragment>
+                    {/* <AvgMood data={employees}/>
+                    <MoodGraph data={employees}/> */}
                     <EmpList employees={employees}/>
                 </Fragment>
             }

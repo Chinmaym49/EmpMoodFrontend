@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import "../styles/card.css";
+import "../styles/Card.module.css";
 
 const Emp=({employee})=> {
     return(

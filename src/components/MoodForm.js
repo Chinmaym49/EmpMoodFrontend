@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import NavBar from './NavBar';
 import img1 from "../smileys/1F60C.svg";
 import img2 from "../smileys/1F60D.svg";
 import img3 from "../smileys/1F61F.svg";
@@ -9,130 +10,182 @@ import img7 from "../smileys/1F604.svg";
 import img8 from "../smileys/1F610.svg";
 import img9 from "../smileys/1F630.svg";
 import img10 from "../smileys/1F625.svg";
-export default class MoodForm extends Component {
-    constructor(props) {
-        super(props)
+import "../styles/Emoji.module.css";
+import './loader.js';
+import axios from 'axios';
+const $ = window.$;
+
+class MoodForm extends Component {
+    constructor() {
+        super()
 
         this.state = {
-            mail: props.mail,
-            hashtag: props.hashtag
+            mail: "",
+            hashtag: "#DB",
+            reason: "Nothing special",
+            mood: 0
         }
     }
 
-    addmailtomain = (usermail) => {
-        if (!usermail) {
-            alert('Enter Valid Value')
-        } else if (this.state.mail.indexOf(usermail) > -1) {
-            alert('Entered mail Already exists')
+    enterHashtag=(e)=> {
+        let h=e.target.value;
+        if(h.length===0)
+            this.setState({hashtag:"#DB"});
+        else {
+            if(h.charAt(0)!=="#")
+                h="#"+h;
+            this.setState({hashtag:h});
         }
-        this.setState((prevState) => {
-            return {
-                usermail: prevState.mail.concat(usermail)
-            }
-        })
     }
-    // addmail = (e) => {
-    //     e.preventDefault();
-    //     const usermail = e.target.elements.email.value;
-    //     this.addmailtomain(usermail);
-    //     e.target.elements.email.value = "";
-    // }
-    addhash = (hashes) => {
-        if (!hashes) {
-            alert('Enter Valid Value')
-        } else if (this.state.hashtag.indexOf(hashes) > -1) {
-            alert('Entered mail Already exists')
+
+    enterMail=(e)=> {
+        this.setState({mail:e.target.value});
+    }
+
+    enterReason=(e)=> {
+        let r=e.target.value;
+        if(r.length===0)
+            this.setState({reason:"Nothing special"});
+        else 
+            this.setState({reason:r});
+    }
+
+    submitForm=async(e)=> {
+        e.preventDefault();
+        document.getElementById("submitbutton").hidden=true;
+        document.getElementById("loadingbutton").hidden=false;
+        document.getElementById("warnalert").hidden=true;
+        document.getElementById("erralert").hidden=true;
+        document.getElementById("succalert").hidden=true;
+        
+        if(this.state.mood===0)
+            document.getElementById("warnalert").hidden=false;
+        else {
+            await axios.post("",this.state)
+            .then((resp) => {
+                document.getElementById("succalert").hidden=false;
+                console.log(resp);
+            })
+            .catch((err)=> {
+                document.getElementById("erralert").hidden=false;
+                console.log(err);
+            });
         }
-        this.setState((prevState) => {
-            return {
-                usermail: prevState.hashtag.concat(hashes)
-            }
-        })
+        document.getElementById("submitbutton").hidden=false;
+        document.getElementById("loadingbutton").hidden=true;
+    }
+
+    selectThis=(id)=> {
+        this.setState({mood:parseInt(id)},()=> {
+            id=parseInt(id);
+            document.getElementById(`img${id}`).style.border="3px dashed black";
+            for(let i=1;i<=10;i++)
+                if(i!==id)
+                    document.getElementById(`img${i}`).style.border="2px dashed silver";
+        }); 
+    }
+
+    componentDidMount() {
+        if(!window.matchMedia("(pointer: coarse)").matches)
+        {
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();   
+            });  
+        }
     }
 
     render() {
-
         return (
-            <div class='container bg-light text-dark'>
+            <Fragment>
+                <NavBar active={"form"}/>
+                <div id="warnalert" className="alert alert-warning alert-dismissible fade show" role="alert" hidden="hidden">
+                    Please select a Mood Rating! 
+                </div>
+                <div id="erralert" className="alert alert-danger alert-dismissible fade show" role="alert" hidden="hidden">
+                    An error occured! 
+                </div>
+                <div id="succalert" className="alert alert-success alert-dismissible fade show" role="alert" hidden="hidden">
+                    Done! Check what mood others are in! 
+                </div>
+                <div className='container-fluid'>
+                    <br/>
+                    <h3>Fill Out the Form:</h3>
+                    <div className=" d-flex p-2 bd-highlight mb-3">
+                        <form onSubmit={this.submitForm} className=" form-control ">
+                            <p className="text-monospace font-weight-bolder" >Enter you mail:<br /></p>
+                            <input name="Email" type="email" className="form-control" placeholder="e.g. abc-pqr@xyz.com" onChange={this.enterMail} required="required"/><br />
+                            <p className="text-monospace font-weight-bolder">Enter a relevant hashtag:<br /></p>
+                            <input name="Hashtags" className="form-control" placeholder="e.g. #CEO-Meet" onChange={this.enterHashtag}/><br />
+                            <p className="text-monospace font-weight-bolder">Select a Mood Rating:<br /></p>
+                            
+                            <div id="emojis" className="container-fluid row justify-content-center" style={{marginLeft:"0px"}}>
+                                <div className="row col-md-6 p-2">
+                                    <div className="col px-0 ms-2 me-2" onClick={()=>(this.selectThis(1))}>
+                                        <img id="img1" className="img-fluid w-100" src={img4} data-toggle="tooltip" data-placement="top" title="&nbsp;1/10&nbsp;"/>
+                                        {window.matchMedia("(pointer: coarse)").matches && <p style={{textAlign: 'center'}}>1/10</p>}
+                                    </div>
+                                    <div className="col px-0 me-2" onClick={()=>(this.selectThis(2))}>
+                                        <img id="img2" className="img-fluid w-100" src={img9} data-toggle="tooltip" data-placement="top" title="&nbsp;2/10&nbsp;"/>
+                                        {window.matchMedia("(pointer: coarse)").matches && <p style={{textAlign: 'center'}}>2/10</p>}
+                                    </div>
 
-                <h3>Fill Out the Form:</h3>
-                <div class=" d-flex p-2 bd-highlight mb-3">
-                    <form onSubmit={this.addmail} class=" form-control ">
-                        <p class="text-white text-monospace font-weight-bolder" >Enter you mail:<br /></p>
-                        <input name="Email" class="form-control text-white" placeholder="Email" value="email" /><br />
-                        <p class="text-monospace font-weight-bolder text-white ">Enter relevant hashtags:<br /></p>
-
-                        <input name="Hashtags" class="form-control text-white" placeholder="Hashtags" value={this.state.hashtag} /><br />
-                        <div id="emojis" class="container-fluid  row justify-content-center ">
-                            <div class="row col-md-6 p-2">
-                                <div class="col px-0">
-                                    <label for="1"><img class="img-fluid  w-100 "
-                                        src={img4} />1</label>
-                                    <input type="radio" id="1" />
-
+                                    <div className="col px-0 me-2" onClick={()=>(this.selectThis(3))}>
+                                        <img id="img3" className="img-fluid w-100" src={img10} data-toggle="tooltip" data-placement="top" title="&nbsp;3/10&nbsp;"/>
+                                        {window.matchMedia("(pointer: coarse)").matches && <p style={{textAlign: 'center'}}>3/10</p>}
+                                    </div>
+                                    <div className="col px-0 me-2" onClick={()=>(this.selectThis(4))}>
+                                        <img id="img4" className="img-fluid w-100" src={img3} data-toggle="tooltip" data-placement="top" title="&nbsp;4/10&nbsp;"/>
+                                        {window.matchMedia("(pointer: coarse)").matches && <p style={{textAlign: 'center'}}>4/10</p>}
+                                    </div>
+                                    <div className="col px-0 me-2" onClick={()=>(this.selectThis(5))}>
+                                        <img id="img5" className="img-fluid w-100" src={img8} data-toggle="tooltip" data-placement="top" title="&nbsp;5/10&nbsp;"/>
+                                        {window.matchMedia("(pointer: coarse)").matches && <p style={{textAlign: 'center'}}>5/10</p>}
+                                    </div>
                                 </div>
 
-                                <div class="col px-0">
-                                    <label for="2"><img class="img-fluid w-100"
-                                        src={img10} />2</label>
-                                    <input type="radio" id="2" />
+                                <div className="row col-md-6 p-2">
+                                    <div className="col px-0 ms-2 me-2" onClick={()=>(this.selectThis(6))}>
+                                        <img id="img6" className="img-fluid  w-100" src={img1} data-toggle="tooltip" data-placement="top" title="&nbsp;6/10&nbsp;"/>
+                                        {window.matchMedia("(pointer: coarse)").matches && <p style={{textAlign: 'center'}}>6/10</p>}
+                                    </div>
+                                    <div className="col px-0 me-2" onClick={()=>(this.selectThis(7))}>
+                                        <img id="img7" className="img-fluid w-100" src={img5} data-toggle="tooltip" data-placement="top" title="&nbsp;7/10&nbsp;"/>
+                                        {window.matchMedia("(pointer: coarse)").matches && <p style={{textAlign: 'center'}}>7/10</p>}
+                                    </div>
+
+                                    <div className="col px-0 me-2" onClick={()=>(this.selectThis(8))}>
+                                         <img id="img8" className="img-fluid w-100" src={img7} data-toggle="tooltip" data-placement="top" title="&nbsp;8/10&nbsp;"/>
+                                        {window.matchMedia("(pointer: coarse)").matches && <p style={{textAlign: 'center'}}>8/10</p>}
+                                    </div>
+                                    <div className="col px-0 me-2" onClick={()=>(this.selectThis(9))}>
+                                        <img id="img9" className="img-fluid w-100" src={img6} data-toggle="tooltip" data-placement="top" title="&nbsp;9/10&nbsp;"/>
+                                        {window.matchMedia("(pointer: coarse)").matches && <p style={{textAlign: 'center'}}>9/10</p>}
+                                    </div>
+                                    <div className="col px-0 me-2" onClick={()=>(this.selectThis(10))}>
+                                        <img id="img10" className="img-fluid w-100" src={img2} data-toggle="tooltip" data-placement="top" title="&nbsp;10/10&nbsp;"/>
+                                        {window.matchMedia("(pointer: coarse)").matches && <p style={{textAlign: 'center'}}>10/10</p>}
+                                    </div>
                                 </div>
-
-                                <div class="col px-0">
-                                    <label for="3"> <img class="img-fluid w-100  "
-                                        src={img9} />3</label>
-                                    <input type="radio" name="emoji" id="3" /></div>
-
-                                <div class="col px-0">
-                                    <label for="4"><img class="img-fluid w-100 "
-                                        src={img3} />4</label>
-                                    <input type="radio" name="emoji" id="4" /></div>
-
-                                <div class="col px-0">
-                                    <label for="5"><img class="img-fluid w-100 "
-                                        src={img8} />5</label>
-                                    <input type="radio" name="emoji" id="5" /></div>
                             </div>
+                            <br/>
+                            <p className="text-monospace font-weight-bolder">Enter your reason:<br /></p>
+                            <input name="Hashtags" className="form-control" placeholder="e.g. This event was mind-boggling!" onChange={this.enterReason}/>
+                            <br/>
+                            <center>
+                                <button id="submitbutton" className="btn btn-primary" type="submit">Submit</button>
+                                <button id="loadingbutton" className="btn btn-primary" type="submit" disabled="disabled" hidden="hidden">
+                                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    &nbsp;&nbsp;Loading...
+                                </button>    
+                            </center>
+                            <br/>
+                        </form>
+                    </div >
 
-
-                            <div class="row col-md-6 p-2">
-                                <div class="col px-0">
-                                    <label for="6"><img class="img-fluid w-100 "
-                                        src={img1} />6</label>
-                                    <input type="radio" name="emoji" id="6" /></div>
-
-                                <div class="col px-0">
-                                    <label for="7"><img class="img-fluid w-100 "
-                                        src={img7} />7</label>
-                                    <input type="radio" name="emoji" id="7" /></div>
-
-                                <div class="col px-0">
-                                    <label for="8"> <img class="img-fluid w-100 "
-                                        src={img5} />8</label>
-                                    <input type="radio" name="emoji" id="8" /></div>
-
-                                <div class="col px-0">
-                                    <label for="9"><img class="img-fluid w-100 "
-                                        src={img6} />9</label>
-                                    <input type="radio" name="emoji" id="9" /></div>
-
-                                <div class="col px-0">
-                                    <label for="10"><img class="img-fluid w-100 "
-                                        src={img2} />10</label>
-                                    <input type="radio" name="emoji" id="10" /></div>
-
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-light mb-2">Submit</button>
-                    </form>
                 </div >
-
-            </div >
+            </Fragment>
         )
     }
 }
-MoodForm.defaultProps = {
-    mail: [],
-    hashtag: []
-}
+
+export default MoodForm;
