@@ -7,11 +7,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
- 
-.form-control{
-  background-color: #663399 ;
-  text-decoration-color: white;
-}
 
 code {
   font-family:'Poppins', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

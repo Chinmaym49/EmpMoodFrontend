@@ -1,8 +1,5 @@
 import React from 'react';
-import styles from './AvgMood.module.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-
+import styles from '../styles/AvgMood.module.css';
 
 const AvgMood = (moodData) => {
     const moods = moodData.data;
