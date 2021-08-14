@@ -24,6 +24,8 @@ const Dashboard=()=> {
         setEmployees(arr);
     }
 
+    let d={"ten":0, "nine":0, "eight":1, "seven":1, "six":1, "five":0, "four":0, "three":0, "two":0, "one": 0}
+
     useEffect(
         ()=> {
             setLoad(true);
@@ -51,9 +53,20 @@ const Dashboard=()=> {
             {
                 !load && !err &&
                 <Fragment>
-                    {/* <AvgMood data={}/>
-                    <MoodGraph data={}/> */}
+                    <div className="row">
+                    
+                    {/* <AvgMood data={}/>*/}
+                    <div className="col-6 overflow-hidden">
+                    <MoodGraph data={d}/> 
+                    <div className="mt-5">
+                    <AvgMood data={d} />
+                    </div>
+                    </div>
+                    <div className="col-6">
                     <EmpList employees={employees}/>
+                    
+                    </div>
+                    </div>
                 </Fragment>
             }
         </Fragment>
