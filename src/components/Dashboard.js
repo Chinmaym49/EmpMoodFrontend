@@ -12,6 +12,18 @@ const Dashboard=()=> {
     const [err,setErr]=useState(false);
     const serverUrl="https://randomuser.me/api/?results=20";
 
+    const bestMoodFirst=()=> {
+        let arr=[...employees];
+        arr.sort((e1,e2)=>(e2.dob.age-e1.dob.age));
+        setEmployees(arr);
+    }
+
+    const worstMoodFirst=()=> {
+        let arr=[...employees];
+        arr.sort((e1,e2)=>(e1.dob.age-e2.dob.age));
+        setEmployees(arr);
+    }
+
     useEffect(
         ()=> {
             setLoad(true);
@@ -33,14 +45,14 @@ const Dashboard=()=> {
 
     return(
         <Fragment>
-            <NavBar active={"dashboard"}/>
+            <NavBar active={"dashboard"} bestMoodFirst={bestMoodFirst} worstMoodFirst={worstMoodFirst}/>
             {load && <div className="spinner-border" role="status"><span className="visually-hidden">Loading...</span></div>}
             {err && <p>Something went wrong!</p>}
             {
                 !load && !err &&
                 <Fragment>
-                    {/* <AvgMood data={employees}/>
-                    <MoodGraph data={employees}/> */}
+                    {/* <AvgMood data={}/>
+                    <MoodGraph data={}/> */}
                     <EmpList employees={employees}/>
                 </Fragment>
             }
