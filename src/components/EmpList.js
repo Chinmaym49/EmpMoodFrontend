@@ -3,11 +3,13 @@ import Emp from "./Emp";
 
 const EmpList=({employees})=> {
 
+    
+
     return(
         <Fragment>
-            <ul className="list-group">
+            <ul className="list-group list-group-flush">
             {
-                employees.map((employee,idx)=>(<li className="list-group-item" key={idx}><Emp employee={employee}/></li>))
+                employees.map((employee,idx)=>(<Emp key={idx} employee={employee}/>))
             }
             </ul>
         </Fragment>

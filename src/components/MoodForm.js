@@ -10,7 +10,6 @@ import img7 from "../smileys/1F604.svg";
 import img8 from "../smileys/1F610.svg";
 import img9 from "../smileys/1F630.svg";
 import img10 from "../smileys/1F625.svg";
-import "../styles/Emoji.module.css";
 import './loader.js';
 import axios from 'axios';
 const $ = window.$;
@@ -19,10 +18,12 @@ class MoodForm extends Component {
     constructor() {
         super()
 
+        this.imgStyle={border: "2px dashed silver", borderRadius: "10px", cursor: "pointer"};
+
         this.state = {
             mail: "",
             hashtag: "#DB",
-            reason: "Nothing special",
+            reason: "No special reason",
             mood: 0
         }
     }
@@ -45,7 +46,7 @@ class MoodForm extends Component {
     enterReason=(e)=> {
         let r=e.target.value;
         if(r.length===0)
-            this.setState({reason:"Nothing special"});
+            this.setState({reason:"No special reason"});
         else 
             this.setState({reason:r});
     }
@@ -78,7 +79,7 @@ class MoodForm extends Component {
     selectThis=(id)=> {
         this.setState({mood:parseInt(id)},()=> {
             id=parseInt(id);
-            document.getElementById(`img${id}`).style.border="3px dashed black";
+            document.getElementById(`img${id}`).style.border="3px dashed #0d6efd";
             for(let i=1;i<=10;i++)
                 if(i!==id)
                     document.getElementById(`img${i}`).style.border="2px dashed silver";
@@ -109,7 +110,7 @@ class MoodForm extends Component {
                 </div>
                 <div className='container-fluid'>
                     <br/>
-                    <h3>Fill Out the Form:</h3>
+                    <h3>Fill Out the Form</h3>
                     <div className=" d-flex p-2 bd-highlight mb-3">
                         <form onSubmit={this.submitForm} className=" form-control ">
                             <p className="text-monospace font-weight-bolder" >Enter you mail:<br /></p>
@@ -121,48 +122,48 @@ class MoodForm extends Component {
                             <div id="emojis" className="container-fluid row justify-content-center" style={{marginLeft:"0px"}}>
                                 <div className="row col-md-6 p-2">
                                     <div className="col px-0 ms-2 me-2" onClick={()=>(this.selectThis(1))}>
-                                        <img id="img1" className="img-fluid w-100" src={img4} data-toggle="tooltip" data-placement="top" title="&nbsp;1/10&nbsp;"/>
+                                        <img alt="1" style={this.imgStyle} id="img1" className="img-fluid w-100" src={img4} data-toggle="tooltip" data-placement="top" title="&nbsp;1/10&nbsp;"/>
                                         {window.matchMedia("(pointer: coarse)").matches && <p style={{textAlign: 'center'}}>1/10</p>}
                                     </div>
                                     <div className="col px-0 me-2" onClick={()=>(this.selectThis(2))}>
-                                        <img id="img2" className="img-fluid w-100" src={img9} data-toggle="tooltip" data-placement="top" title="&nbsp;2/10&nbsp;"/>
+                                        <img alt="2" style={this.imgStyle} id="img2" className="img-fluid w-100" src={img9} data-toggle="tooltip" data-placement="top" title="&nbsp;2/10&nbsp;"/>
                                         {window.matchMedia("(pointer: coarse)").matches && <p style={{textAlign: 'center'}}>2/10</p>}
                                     </div>
 
                                     <div className="col px-0 me-2" onClick={()=>(this.selectThis(3))}>
-                                        <img id="img3" className="img-fluid w-100" src={img10} data-toggle="tooltip" data-placement="top" title="&nbsp;3/10&nbsp;"/>
+                                        <img alt="3" style={this.imgStyle} id="img3" className="img-fluid w-100" src={img10} data-toggle="tooltip" data-placement="top" title="&nbsp;3/10&nbsp;"/>
                                         {window.matchMedia("(pointer: coarse)").matches && <p style={{textAlign: 'center'}}>3/10</p>}
                                     </div>
                                     <div className="col px-0 me-2" onClick={()=>(this.selectThis(4))}>
-                                        <img id="img4" className="img-fluid w-100" src={img3} data-toggle="tooltip" data-placement="top" title="&nbsp;4/10&nbsp;"/>
+                                        <img alt="4" style={this.imgStyle} id="img4" className="img-fluid w-100" src={img3} data-toggle="tooltip" data-placement="top" title="&nbsp;4/10&nbsp;"/>
                                         {window.matchMedia("(pointer: coarse)").matches && <p style={{textAlign: 'center'}}>4/10</p>}
                                     </div>
                                     <div className="col px-0 me-2" onClick={()=>(this.selectThis(5))}>
-                                        <img id="img5" className="img-fluid w-100" src={img8} data-toggle="tooltip" data-placement="top" title="&nbsp;5/10&nbsp;"/>
+                                        <img alt="5" style={this.imgStyle} id="img5" className="img-fluid w-100" src={img8} data-toggle="tooltip" data-placement="top" title="&nbsp;5/10&nbsp;"/>
                                         {window.matchMedia("(pointer: coarse)").matches && <p style={{textAlign: 'center'}}>5/10</p>}
                                     </div>
                                 </div>
 
                                 <div className="row col-md-6 p-2">
                                     <div className="col px-0 ms-2 me-2" onClick={()=>(this.selectThis(6))}>
-                                        <img id="img6" className="img-fluid  w-100" src={img1} data-toggle="tooltip" data-placement="top" title="&nbsp;6/10&nbsp;"/>
+                                        <img alt="6" style={this.imgStyle} id="img6" className="img-fluid  w-100" src={img1} data-toggle="tooltip" data-placement="top" title="&nbsp;6/10&nbsp;"/>
                                         {window.matchMedia("(pointer: coarse)").matches && <p style={{textAlign: 'center'}}>6/10</p>}
                                     </div>
                                     <div className="col px-0 me-2" onClick={()=>(this.selectThis(7))}>
-                                        <img id="img7" className="img-fluid w-100" src={img5} data-toggle="tooltip" data-placement="top" title="&nbsp;7/10&nbsp;"/>
+                                        <img alt="7" style={this.imgStyle} id="img7" className="img-fluid w-100" src={img5} data-toggle="tooltip" data-placement="top" title="&nbsp;7/10&nbsp;"/>
                                         {window.matchMedia("(pointer: coarse)").matches && <p style={{textAlign: 'center'}}>7/10</p>}
                                     </div>
 
                                     <div className="col px-0 me-2" onClick={()=>(this.selectThis(8))}>
-                                         <img id="img8" className="img-fluid w-100" src={img7} data-toggle="tooltip" data-placement="top" title="&nbsp;8/10&nbsp;"/>
+                                        <img alt="8" style={this.imgStyle} id="img8" className="img-fluid w-100" src={img7} data-toggle="tooltip" data-placement="top" title="&nbsp;8/10&nbsp;"/>
                                         {window.matchMedia("(pointer: coarse)").matches && <p style={{textAlign: 'center'}}>8/10</p>}
                                     </div>
                                     <div className="col px-0 me-2" onClick={()=>(this.selectThis(9))}>
-                                        <img id="img9" className="img-fluid w-100" src={img6} data-toggle="tooltip" data-placement="top" title="&nbsp;9/10&nbsp;"/>
+                                        <img alt="9" style={this.imgStyle} id="img9" className="img-fluid w-100" src={img6} data-toggle="tooltip" data-placement="top" title="&nbsp;9/10&nbsp;"/>
                                         {window.matchMedia("(pointer: coarse)").matches && <p style={{textAlign: 'center'}}>9/10</p>}
                                     </div>
                                     <div className="col px-0 me-2" onClick={()=>(this.selectThis(10))}>
-                                        <img id="img10" className="img-fluid w-100" src={img2} data-toggle="tooltip" data-placement="top" title="&nbsp;10/10&nbsp;"/>
+                                        <img alt="10" style={this.imgStyle} id="img10" className="img-fluid w-100" src={img2} data-toggle="tooltip" data-placement="top" title="&nbsp;10/10&nbsp;"/>
                                         {window.matchMedia("(pointer: coarse)").matches && <p style={{textAlign: 'center'}}>10/10</p>}
                                     </div>
                                 </div>
