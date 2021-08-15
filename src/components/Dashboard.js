@@ -26,7 +26,7 @@ const Dashboard=()=> {
         setEmployees(arr);
     }
 
-    let d={"ten":0, "nine":0, "eight":1, "seven":1, "six":1, "five":0, "four":0, "three":0, "two":0, "one": 0}
+    let d={"ten":1, "nine":2, "eight":3, "seven":4, "six":5, "five":6, "four":7, "three":8, "two":9, "one": 10};
 
     useEffect(
         ()=> {
@@ -56,18 +56,17 @@ const Dashboard=()=> {
                 !load && !err &&
                 <Fragment>
                     <div className="row">
-                    
-                    {/* <AvgMood data={}/>*/}
-                    <div className="col-6 overflow-hidden">
-                    <MoodGraph data={d}/> 
-                    <div className="mt-5">
-                    <AvgMood data={d} />
-                    </div>
-                    </div>
-                    <div className="col-6">
-                    <EmpList employees={employees}/>
-                    
-                    </div>
+                        <div className="col-sm-6">
+                            <div className="sticky-top">
+                                <div className="mt-3 mb-4">
+                                    <AvgMood data={d} />
+                                </div>
+                                <MoodGraph data={d}/> 
+                            </div>
+                        </div>
+                        <div className="col-sm-6">
+                            <EmpList employees={employees}/>
+                        </div>
                     </div>
                 </Fragment>
             }
