@@ -5,6 +5,8 @@ import axios from "axios";
 import AvgMood from "./AvgMood";
 import MoodGraph from "./MoodGraph";
 
+// data passed to moodGraph and AvgMood should be  in the form -> data: {"ten":0, "nine":0, "eight":1, "seven":1, "six":1, "five":0, "four":0, "three":0, "two":0, "one": 0}
+
 const Dashboard=()=> {
 
     const [employees,setEmployees]=useState([]);

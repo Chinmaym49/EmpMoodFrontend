@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '../styles/AvgMood.module.css';
+// data passed is in the form -> data: {"ten":0, "nine":0, "eight":1, "seven":1, "six":1, "five":0, "four":0, "three":0, "two":0, "one": 0}
 
 const AvgMood = (moodData) => {
     const moods = moodData.data;

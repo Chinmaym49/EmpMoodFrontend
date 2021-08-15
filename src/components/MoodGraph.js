@@ -2,6 +2,8 @@ import React from 'react';
 import {HorizontalBar} from 'react-chartjs-2';
 import styles from '../styles/MoodGraph.module.css';
 
+// data passed is in the form -> data: {"ten":0, "nine":0, "eight":1, "seven":1, "six":1, "five":0, "four":0, "three":0, "two":0, "one": 0}
+
 const MoodGraph = (data) => {
     const barChart = (
         <HorizontalBar 
