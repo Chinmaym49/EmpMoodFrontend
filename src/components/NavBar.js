@@ -7,7 +7,6 @@ const NavBar=(props)=> {
         let s=e.target.value;
         if(s.length>0 && s.charAt(0)==="#")
             s=s.substring(1);
-        console.log(s);
         let arr=[];
         props.employees.forEach((employee)=> {
             if(employee.hashTag.search(s)!==-1)
