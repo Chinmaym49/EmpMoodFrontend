@@ -19,10 +19,11 @@ class MoodForm extends Component {
         super()
 
         this.imgStyle={border: "2px dashed silver", borderRadius: "10px", cursor: "pointer"};
+        this.server_url="https://grads-coding-challenge-group-7.uc.r.appspot.com/user";
 
         this.state = {
             mail: "",
-            hashtag: "#DB",
+            hashtag: "DB",
             reason: "No special reason",
             mood: 0
         }
@@ -31,11 +32,14 @@ class MoodForm extends Component {
     enterHashtag=(e)=> {
         let h=e.target.value;
         if(h.length===0)
-            this.setState({hashtag:"#DB"});
+            this.setState({hashtag:"DB"},()=>(console.log(this.state.hashtag)));
         else {
-            if(h.charAt(0)!=="#")
-                h="#"+h;
-            this.setState({hashtag:h});
+            if(h.charAt(0)==="#")
+                h=h.substring(1);
+            if(h.length===0)
+                this.setState({hashtag:"DB"},()=>(console.log(this.state.hashtag)));
+            else
+                this.setState({hashtag:h},()=>(console.log(this.state.hashtag)));
         }
     }
 
@@ -62,7 +66,8 @@ class MoodForm extends Component {
         if(this.state.mood===0)
             document.getElementById("warnalert").hidden=false;
         else {
-            await axios.post("",this.state)
+            const data={email:this.state.mail,mood:this.state.mood,hashTag:this.state.hashtag,justification:this.state.reason};
+            await axios.post(this.server_url,data)
             .then((resp) => {
                 document.getElementById("succalert").hidden=false;
                 console.log(resp);
