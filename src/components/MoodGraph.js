@@ -2,9 +2,12 @@ import React from 'react';
 import {HorizontalBar} from 'react-chartjs-2';
 import styles from '../styles/MoodGraph.module.css';
 
-// data passed is in the form -> data: {"ten":0, "nine":0, "eight":1, "seven":1, "six":1, "five":0, "four":0, "three":0, "two":0, "one": 0}
+const MoodGraph = ({employees}) => {
 
-const MoodGraph = (data) => {
+    let data=[0,0,0,0,0,0,0,0,0,0];
+    employees.forEach((employee)=>(data[employee.mood-1])++);
+    data.reverse();
+
     const barChart = (
         <HorizontalBar 
             data = {{
@@ -23,7 +26,7 @@ const MoodGraph = (data) => {
                         'rgba(232, 36, 0, 1)',
                         'rgba(232, 0, 0, 1)',
                     ],
-                    data: [data.data.ten, data.data.nine, data.data.eight, data.data.seven, data.data.six, data.data.five, data.data.four, data.data.three, data.data.two, data.data.one],
+                    data: data
                 }]
             }}
             options = {{
