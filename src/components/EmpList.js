@@ -1,9 +1,6 @@
-import { Fragment } from "react";
 import Emp from "./Emp";
 
 const EmpList=({employees})=> {
-
-    
 
     return(
         <ul className="list-group list-group-flush">
