@@ -5,28 +5,25 @@ import axios from "axios";
 import AvgMood from "./AvgMood";
 import MoodGraph from "./MoodGraph";
 
-// data passed to moodGraph and AvgMood should be  in the form -> data: {"ten":0, "nine":0, "eight":1, "seven":1, "six":1, "five":0, "four":0, "three":0, "two":0, "one": 0}
-
 const Dashboard=()=> {
 
     const [employees,setEmployees]=useState([]);
+    const [_employees,_setEmployees]=useState([]);
     const [load,setLoad]=useState(true);
     const [err,setErr]=useState(false);
-    const serverUrl="https://randomuser.me/api/?results=20";
+    const serverUrl="https://grads-coding-challenge-group-7.uc.r.appspot.com/moods";
 
     const bestMoodFirst=()=> {
-        let arr=[...employees];
-        arr.sort((e1,e2)=>(e2.dob.age-e1.dob.age));
-        setEmployees(arr);
+        let arr=[..._employees];
+        arr.sort((e1,e2)=>(e2.mood-e1.mood));
+        _setEmployees(arr);
     }
 
     const worstMoodFirst=()=> {
-        let arr=[...employees];
-        arr.sort((e1,e2)=>(e1.dob.age-e2.dob.age));
-        setEmployees(arr);
+        let arr=[..._employees];
+        arr.sort((e1,e2)=>(e1.mood-e2.mood));
+        _setEmployees(arr);
     }
-
-    let d={"ten":1, "nine":2, "eight":3, "seven":4, "six":5, "five":6, "four":7, "three":8, "two":9, "one": 10};
 
     useEffect(
         ()=> {
@@ -37,7 +34,8 @@ const Dashboard=()=> {
             .then((resp)=> {
                 setLoad(false);
                 setErr(false);
-                setEmployees(resp.data.results);
+                setEmployees(resp.data);
+                _setEmployees(resp.data);
             })
             .catch((err)=> {
                 setLoad(false);
@@ -49,7 +47,7 @@ const Dashboard=()=> {
 
     return(
         <Fragment>
-            <NavBar active={"dashboard"} bestMoodFirst={bestMoodFirst} worstMoodFirst={worstMoodFirst}/>
+            <NavBar active={"dashboard"} bestMoodFirst={bestMoodFirst} worstMoodFirst={worstMoodFirst} setEmployees={_setEmployees} employees={employees}/>
             {load && <div className="spinner-border" role="status"><span className="visually-hidden">Loading...</span></div>}
             {err && <p>Something went wrong!</p>}
             {
@@ -58,14 +56,14 @@ const Dashboard=()=> {
                     <div className="row">
                         <div className="col-sm-6">
                             <div className="sticky-top">
-                                <div className="mt-3 mb-4">
-                                    <AvgMood data={d} />
+                                <div className="mb-4">
+                                    <AvgMood employees={_employees}/>
                                 </div>
-                                <MoodGraph data={d}/> 
+                                <MoodGraph employees={_employees}/>
                             </div>
                         </div>
                         <div className="col-sm-6">
-                            <EmpList employees={employees}/>
+                            <EmpList employees={_employees}/>
                         </div>
                     </div>
                 </Fragment>
