@@ -38,11 +38,11 @@ const Emp=({employee})=> {
                     <div className="card-header" style={cardHeaderStyle}>{employee.email}</div>
                     <div className="card-body">
                         <h5 className="card-title">
-                            Mood Rating: {employee.dob.age}
-                            <img alt="emoji" src={imgs[7]} style={imgStyle}></img>
+                            Mood Rating: {employee.mood}
+                            <img alt="emoji" src={imgs[employee.mood]} style={imgStyle}></img>
                         </h5>
-                        <h6 className="card-subtitle mb-2 text-muted">{employee.login.sha256}</h6>
-                        <p className="card-text text-primary"><b>#{employee.name.last}</b></p>
+                        <h6 className="card-subtitle mb-2 text-muted">{employee.justification}</h6>
+                        <p className="card-text text-primary"><b>#{employee.hashTag}</b></p>
                     </div>
                 </div>
             </li>
